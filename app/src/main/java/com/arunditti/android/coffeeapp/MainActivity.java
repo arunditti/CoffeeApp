@@ -20,38 +20,54 @@ public class MainActivity extends AppCompatActivity {
     //This method is used to increment the quantity
     public void incrementQuantity(View view) {
         quantity = quantity + 1;
-        display(quantity);
+        displayQuantity(quantity);
     }
 
     //This method will decrement the quantity
     public void decrementQuantity(View view) {
         quantity = quantity - 1;
-        display(quantity);
+        displayQuantity(quantity);
     }
 
     // This method is called when the button is clicked
     public void submitOrder(View view) {
-        int price = quantity * 5;
-        String priceMessage = "Total: $ " + price;
-        priceMessage = priceMessage + "\nThank you!";
-        displayMessage(priceMessage);
+        int totalPrice = calculatePrice();
+        String orderSummaryMessage = createOrderSummary(totalPrice);
+        displayMessage(orderSummaryMessage);
+    }
+
+    /** Calculate the price of the order
+     *
+     * @return total price
+     */
+    private int calculatePrice() {
+        int pricePerCup = 5;
+        int totalPrice = quantity * pricePerCup;
+        return totalPrice;
+    }
+
+    /**
+     * create summary of the order
+     * @param totalPrice of the order
+     * @return text summary
+     */
+    private String createOrderSummary(int  totalPrice) {
+        String orderSummaryMessage = "Name: Anushri Tiwari";
+        orderSummaryMessage = orderSummaryMessage + "\nQuantity: " + quantity;
+        orderSummaryMessage = orderSummaryMessage +"\nTotal: $" +totalPrice;
+        orderSummaryMessage = orderSummaryMessage + "\nThank You!";
+        return orderSummaryMessage;
     }
 
     // This method shows the given quantity value on the screen
-    private void display(int number) {
+    private void displayQuantity(int number) {
         TextView quantityTextView = (TextView) findViewById(R.id.quantity_text_view);
         quantityTextView.setText("" + number);
     }
 
-    // This method displays the price
-    private void displayPrice(int number) {
-        TextView priceTextView = (TextView) findViewById(R.id.price_text_view);
-        priceTextView.setText(NumberFormat.getCurrencyInstance().format(number));
-    }
-
     private void displayMessage(String message) {
-        TextView priceTextView = (TextView)findViewById(R.id.price_text_view);
-        priceTextView.setText(message);
+        TextView orderSummaryTextView = (TextView)findViewById(R.id.order_summary_text_view);
+        orderSummaryTextView.setText(message);
     }
 
 }
