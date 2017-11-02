@@ -3,7 +3,10 @@ package com.arunditti.android.coffeeapp;
 import android.icu.text.NumberFormat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 
 
@@ -31,8 +34,20 @@ public class MainActivity extends AppCompatActivity {
 
     // This method is called when the button is clicked
     public void submitOrder(View view) {
+        EditText nameField = (EditText) findViewById(R.id.name_field);
+        String name = nameField.getText().toString();
+        //Log.v("MainActivity", "Name: " + name);
+
+        CheckBox whippedCreamCheckbox = (CheckBox) findViewById(R.id.whipped_cream_checkbox);
+        boolean hasWippedCream = whippedCreamCheckbox.isChecked();
+       // Log.v("MainActivity", "Has whipped cream " + hasWippedCream);
+
+        CheckBox chocolateCheckbox = (CheckBox) findViewById(R.id.chocolate_checkbox);
+        boolean hasChocolate = chocolateCheckbox.isChecked();
+        //Log.v("MainActivity", "Has chocolate " + hasChocolate);
+
         int totalPrice = calculatePrice();
-        String orderSummaryMessage = createOrderSummary(totalPrice);
+        String orderSummaryMessage = createOrderSummary(name, totalPrice, hasWippedCream, hasChocolate);
         displayMessage(orderSummaryMessage);
     }
 
@@ -49,10 +64,14 @@ public class MainActivity extends AppCompatActivity {
     /**
      * create summary of the order
      * @param totalPrice of the order
+     * @param addWhippedCream to add whipped cream
+     * @param addChocolate to add chocolate
      * @return text summary
      */
-    private String createOrderSummary(int  totalPrice) {
-        String orderSummaryMessage = "Name: Anushri Tiwari";
+    private String createOrderSummary(String name, int  totalPrice, boolean addWhippedCream, boolean addChocolate) {
+        String orderSummaryMessage = "Name: " + name;
+        orderSummaryMessage += "\nAdd whipped cream? " + addWhippedCream;
+        orderSummaryMessage +="\nAdd chocolate? " + addChocolate;
         orderSummaryMessage = orderSummaryMessage + "\nQuantity: " + quantity;
         orderSummaryMessage = orderSummaryMessage +"\nTotal: $" +totalPrice;
         orderSummaryMessage = orderSummaryMessage + "\nThank You!";
