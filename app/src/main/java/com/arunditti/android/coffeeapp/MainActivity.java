@@ -59,7 +59,14 @@ public class MainActivity extends AppCompatActivity {
 
         int totalPrice = calculatePrice(hasWippedCream, hasChocolate);
         String orderSummaryMessage = createOrderSummary(name, totalPrice, hasWippedCream, hasChocolate);
-        displayMessage(orderSummaryMessage);
+
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Coffee order for " + name);
+        intent.putExtra(Intent.EXTRA_TEXT, orderSummaryMessage);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 
     /** Calculate the price of the order
@@ -104,11 +111,6 @@ public class MainActivity extends AppCompatActivity {
     private void displayQuantity(int number) {
         TextView quantityTextView = (TextView) findViewById(R.id.quantity_text_view);
         quantityTextView.setText("" + number);
-    }
-
-    private void displayMessage(String message) {
-        TextView orderSummaryTextView = (TextView)findViewById(R.id.order_summary_text_view);
-        orderSummaryTextView.setText(message);
     }
 
 }
