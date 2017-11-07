@@ -97,13 +97,24 @@ public class MainActivity extends AppCompatActivity {
      * @param addChocolate to add chocolate
      * @return text summary
      */
+//    private String createOrderSummary(String name, int  totalPrice, boolean addWhippedCream, boolean addChocolate) {
+//        String orderSummaryMessage = "Name: " + name;
+//        orderSummaryMessage += "\nAdd whipped cream? " + addWhippedCream;
+//        orderSummaryMessage +="\nAdd chocolate? " + addChocolate;
+//        orderSummaryMessage = orderSummaryMessage + "\nQuantity: " + quantity;
+//        orderSummaryMessage = orderSummaryMessage +"\nTotal: $" +totalPrice;
+//        orderSummaryMessage = orderSummaryMessage + "\nThank You!";
+//        return orderSummaryMessage;
+//    }
+
     private String createOrderSummary(String name, int  totalPrice, boolean addWhippedCream, boolean addChocolate) {
-        String orderSummaryMessage = "Name: " + name;
-        orderSummaryMessage += "\nAdd whipped cream? " + addWhippedCream;
-        orderSummaryMessage +="\nAdd chocolate? " + addChocolate;
-        orderSummaryMessage = orderSummaryMessage + "\nQuantity: " + quantity;
-        orderSummaryMessage = orderSummaryMessage +"\nTotal: $" +totalPrice;
-        orderSummaryMessage = orderSummaryMessage + "\nThank You!";
+        String orderSummaryMessage = getString(R.string.order_summary_name, name);
+        orderSummaryMessage += "\n" + getString(R.string.order_summary_whipped_cream, addWhippedCream);
+        orderSummaryMessage += "\n" + getString(R.string.order_summary_chocolate, addChocolate);
+        orderSummaryMessage += "\n" + getString(R.string.order_summary_quantity, quantity);
+        orderSummaryMessage += "\n" + getString(R.string.order_summary_price,
+                                NumberFormat.getCurrencyInstance().format(totalPrice));
+        orderSummaryMessage += "\n" + getString(R.string.thank_you);
         return orderSummaryMessage;
     }
 
